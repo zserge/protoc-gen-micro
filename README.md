@@ -51,3 +51,6 @@ Your output result should be:
 
 The micro generated code includes clients and handlers which reduce boiler plate code
 
+## LICENSE
+
+protoc-gen-micro is a liberal reuse of protoc-gen-go hence we maintain the original license 

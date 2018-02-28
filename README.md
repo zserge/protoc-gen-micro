@@ -1,6 +1,8 @@
 # protoc-gen-micro
 
-This is protobuf generation for micro. We previously maintained a [fork](https://github.com/micro/protobuf) of [golang/protobuf](https://github.com/golang/protobuf) 
+This is protobuf code generation for micro. We use protoc-gen-micro to reduce boilerplate code.
+
+Note: We previously maintained a [fork](https://github.com/micro/protobuf) of [golang/protobuf](https://github.com/golang/protobuf) 
 to include the micro plugin but have since moved to protoc-gen-micro. 
 
 ## Install

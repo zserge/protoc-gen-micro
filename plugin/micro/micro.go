@@ -13,7 +13,7 @@ import (
 // Paths for packages used by code generated in this file,
 // relative to the import_prefix of the generator.Generator.
 const (
-	contextPkgPath = "golang.org/x/net/context"
+	contextPkgPath = "context"
 	clientPkgPath  = "github.com/micro/go-micro/client"
 	serverPkgPath  = "github.com/micro/go-micro/server"
 )

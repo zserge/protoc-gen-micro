@@ -96,7 +96,7 @@ func (g *micro) GenerateImports(file *generator.FileDescriptor) {
 
 // reservedClientName records whether a client name is reserved on the client side.
 var reservedClientName = map[string]bool{
-// TODO: do we need any in go-micro?
+	// TODO: do we need any in go-micro?
 }
 
 func unexport(s string) string { return strings.ToLower(s[:1]) + s[1:] }

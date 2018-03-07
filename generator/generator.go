@@ -1187,22 +1187,22 @@ func (g *Generator) generate(file *FileDescriptor) {
 	}
 
 	/*
-		for _, enum := range g.file.enum {
-			g.generateEnum(enum)
-		}
-		for _, desc := range g.file.desc {
-			// Don't generate virtual messages for maps.
-			if desc.GetOptions().GetMapEntry() {
-				continue
+			for _, enum := range g.file.enum {
+				g.generateEnum(enum)
 			}
-			g.generateMessage(desc)
-		}
-		for _, ext := range g.file.ext {
-			g.generateExtension(ext)
-		}
-	*/
+			for _, desc := range g.file.desc {
+				// Don't generate virtual messages for maps.
+				if desc.GetOptions().GetMapEntry() {
+					continue
+				}
+				g.generateMessage(desc)
+			}
+			for _, ext := range g.file.ext {
+				g.generateExtension(ext)
+			}
 
-	g.generateInitFunction()
+		g.generateInitFunction()
+	*/
 
 	// Run the plugins before the imports so we know which imports are necessary.
 	g.runPlugins(file)

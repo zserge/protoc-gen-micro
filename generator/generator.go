@@ -1366,7 +1366,9 @@ func (g *Generator) generateImports() {
 	g.P("var _ = ", g.Pkg["fmt"], ".Errorf")
 	g.P("var _ = ", g.Pkg["math"], ".Inf")
 	for pkgName, typeName := range g.usedPackages {
-		g.P("var _ = ", pkgName, ".", typeName, "{}")
+		if pkgName != g.packageName {
+			g.P("var _ = ", pkgName, ".", typeName, "{}")
+		}
 	}
 	g.P()
 }

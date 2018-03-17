@@ -567,7 +567,7 @@ type Generator struct {
 	allFilesByName   map[string]*FileDescriptor // All files by filename.
 	genFiles         []*FileDescriptor          // Those files we will generate output for.
 	file             *FileDescriptor            // The file we are compiling now.
-	usedPackages     map[string]bool            // Names of packages used in current file.
+	usedPackages     map[string]string          // Key is package name, value is some type name from that package
 	typeNameToObject map[string]Object          // Key is a fully-qualified name in input syntax.
 	init             []string                   // Lines to emit in the init function.
 	indent           string
@@ -1171,7 +1171,7 @@ func (g *Generator) FileOf(fd *descriptor.FileDescriptorProto) *FileDescriptor {
 // supposed to generate.
 func (g *Generator) generate(file *FileDescriptor) {
 	g.file = g.FileOf(file.FileDescriptorProto)
-	g.usedPackages = make(map[string]bool)
+	g.usedPackages = make(map[string]string)
 
 	if g.file.index == 0 {
 		// For one file in the package, assert version compatibility.
@@ -1365,6 +1365,9 @@ func (g *Generator) generateImports() {
 	g.P("var _ = ", g.Pkg["proto"], ".Marshal")
 	g.P("var _ = ", g.Pkg["fmt"], ".Errorf")
 	g.P("var _ = ", g.Pkg["math"], ".Inf")
+	for pkgName, typeName := range g.usedPackages {
+		g.P("var _ = ", pkgName, ".", typeName, "{}")
+	}
 	g.P()
 }
 
@@ -1385,7 +1388,7 @@ func (g *Generator) generateImported(id *ImportedDescriptor) {
 		}
 	}
 	g.P("// ", sn, " from public import ", filename)
-	g.usedPackages[df.PackageName()] = true
+	g.usedPackages[df.PackageName()] = sn
 
 	for _, sym := range df.exported[id.o] {
 		sym.GenerateAlias(g, df.PackageName())
@@ -1691,7 +1694,7 @@ func (g *Generator) RecordTypeUse(t string) {
 	if obj, ok := g.typeNameToObject[t]; ok {
 		// Call ObjectNamed to get the true object to record the use.
 		obj = g.ObjectNamed(t)
-		g.usedPackages[obj.PackageName()] = true
+		g.usedPackages[obj.PackageName()] = t
 	}
 }
 
